@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moong Dal & Raw Jackfruit — Bengali Soul Food</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mustard: #c8860a;
+    --turmeric: #e8a820;
+    --deep: #1a1208;
+    --bark: #3d2b1f;
+    --cream: #fdf6e8;
+    --fog: #f3e9d0;
+    --smoke: #e8dcc4;
+    --green: #2d5016;
+    --red: #8b1a1a;
+    --ghee: #f5c842;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--deep);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background-color: var(--bark);
+    padding: 70px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(200,134,10,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(139,26,26,0.2) 0%, transparent 50%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--turmeric);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.05;
+    position: relative;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    color: var(--turmeric);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--smoke);
+    margin-top: 18px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-style: italic;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    position: relative;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(232,168,32,0.4);
+    color: var(--smoke);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+  }
+
+  /* ── SPICE STRIP ── */
+  .spice-strip {
+    background: var(--turmeric);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--bark);
+    font-weight: 700;
+  }
+
+  .spice-strip span::before { margin-right: 6px; }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  /* ── INGREDIENTS ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 52px 0 28px;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--bark);
+  }
+
+  .section-header .deco-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--mustard), transparent);
+  }
+
+  .section-header .section-num {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--turmeric);
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 32px;
+  }
+
+  @media (max-width: 560px) {
+    .ingredients-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  .ingredient {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--smoke);
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .ingredient:hover {
+    background: rgba(200,134,10,0.06);
+    border-radius: 4px;
+    padding-left: 6px;
+  }
+
+  .ing-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--mustard);
+    font-weight: 700;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .ing-name { color: var(--bark); }
+
+  .ing-note {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    margin-left: 4px;
+  }
+
+  /* ── FLAVOR NOTE BANNER ── */
+  .flavor-banner {
+    background: var(--bark);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 28px 36px;
+    margin: 44px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flavor-banner::after {
+    content: '✦';
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    color: rgba(232,168,32,0.15);
+    line-height: 1;
+  }
+
+  .flavor-banner h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--turmeric);
+    margin-bottom: 12px;
+  }
+
+  .flavor-banner p {
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 560px;
+    font-size: 1.05rem;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .step {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 24px 20px;
+    border: 1px solid var(--smoke);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(61,43,31,0.1);
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--smoke);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .step-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--mustard);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .step-icon {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .step ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .step ul li {
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    font-size: 0.97rem;
+    color: var(--bark);
+    line-height: 1.5;
+  }
+
+  .step ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--turmeric);
+    font-size: 0.85rem;
+  }
+
+  /* ── FULL-WIDTH STEPS ── */
+  .step.full {
+    grid-column: 1 / -1;
+  }
+
+  .step.full ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+
+  /* ── TIPS ── */
+  .tips-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tip {
+    background: var(--fog);
+    border-left: 4px solid var(--turmeric);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.95rem;
+    color: var(--bark);
+    font-style: italic;
+  }
+
+  .tip strong {
+    font-style: normal;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--mustard);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ── UPGRADE SECTION ── */
+  .upgrade {
+    background: linear-gradient(135deg, var(--green) 0%, #1e3a0a 100%);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-top: 52px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upgrade::before {
+    content: '🌿';
+    font-size: 8rem;
+    position: absolute;
+    right: -10px;
+    bottom: -20px;
+    opacity: 0.12;
+    line-height: 1;
+  }
+
+  .upgrade h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+
+  .upgrade .sub {
+    color: rgba(253,246,232,0.65);
+    font-style: italic;
+    margin-bottom: 22px;
+    font-size: 0.95rem;
+  }
+
+  .upgrade ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .upgrade ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .upgrade ul li::before {
+    content: '✦';
+    color: var(--turmeric);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── SERVE WITH ── */
+  .serve {
+    margin-top: 42px;
+    text-align: center;
+  }
+
+  .serve h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--mustard);
+    margin-bottom: 16px;
+  }
+
+  .serve-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .serve-pill {
+    background: var(--bark);
+    color: var(--cream);
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page > * {
+    animation: fadeUp 0.5s ease both;
+  }
+
+  /* stagger children */
+  .page > *:nth-child(1) { animation-delay: 0.3s; }
+  .page > *:nth-child(2) { animation-delay: 0.4s; }
+  .page > *:nth-child(3) { animation-delay: 0.5s; }
+  .page > *:nth-child(4) { animation-delay: 0.6s; }
+  .page > *:nth-child(5) { animation-delay: 0.7s; }
+  .page > *:nth-child(6) { animation-delay: 0.75s; }
+  .page > *:nth-child(7) { animation-delay: 0.8s; }
+
+  /* divider */
+  .divider {
+    text-align: center;
+    color: var(--turmeric);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 12px 0 0;
+    opacity: 0.5;
+  }
+
+  .warning-note {
+    background: rgba(139,26,26,0.07);
+    border: 1px solid rgba(139,26,26,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--red);
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  .warning-note::before {
+    content: '⚠ ';
+  }
+
+  .site-nav {
+    background: var(--deep);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-nav a {
+    color: var(--smoke);
+    text-decoration: none;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .site-nav a:hover { color: var(--turmeric); }
+  .site-nav .site-title {
+    color: var(--turmeric);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html">← All Recipes</a>
+  <span class="site-title">My Recipe Book</span>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">A Bengali Kitchen Classic</p>
+  <h1>Moong Dal<br>with <em>Raw Jackfruit</em></h1>
+  <p class="hero-sub">The dal that eats like a slow-cooked meat dish — without a single bite of it.</p>
+  <div class="hero-tags">
+    <span class="tag">🍛 Serves 4</span>
+    <span class="tag">🌱 Vegetarian</span>
+    <span class="tag">🪔 Niramish-style</span>
+    <span class="tag">⏱ ~45 min</span>
+  </div>
+</header>
+
+<div class="spice-strip">
+  <span>🟡 Turmeric</span>
+  <span>🔴 Dried Chili</span>
+  <span>🌿 Panchphoron</span>
+  <span>🧈 Mustard Oil</span>
+  <span>✨ Ghee</span>
+</div>
+
+<div class="page">
+
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>What You'll Need</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="ingredients-grid">
+    <div class="ingredient"><span class="ing-amount">1 cup</span><span class="ing-name">moong dal <span class="ing-note">dry roasted until nutty & golden</span></span></div>
+    <div class="ingredient"><span class="ing-amount">2 cups</span><span class="ing-name">raw jackfruit <span class="ing-note">cubed, seeds out</span></span></div>
+    <div class="ingredient"><span class="ing-amount">1</span><span class="ing-name">medium potato <span class="ing-note">optional, cubed</span></span></div>
+    <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">ginger paste</span></div>
+    <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">turmeric</span></div>
+    <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">cumin powder</span></div>
+    <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">coriander powder</span></div>
+    <div class="ingredient"><span class="ing-amount">1</span><span class="ing-name">bay leaf</span></div>
+    <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">panchphoron</span></div>
+    <div class="ingredient"><span class="ing-amount">1–2</span><span class="ing-name">dried red chilies</span></div>
+    <div class="ingredient"><span class="ing-amount">4–5 cloves</span><span class="ing-name">garlic <span class="ing-note">thinly sliced</span></span></div>
+    <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">ghee</span></div>
+    <div class="ingredient"><span class="ing-amount">1–1½ tbsp</span><span class="ing-name">mustard oil</span></div>
+    <div class="ingredient"><span class="ing-amount">to taste</span><span class="ing-name">salt + a pinch of sugar</span></div>
+  </div>
+
+  <div class="flavor-banner">
+    <h3>Why does this work so well?</h3>
+    <p>Dry-roasted moong brings a toasty, nutty backbone. Young jackfruit soaks up spices and takes on a meaty, pulled texture. Mustard oil provides sharp heat; a spoon of ghee at the end adds silk. Together they do something greater than the sum of their parts.</p>
+  </div>
+
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>How to Make It</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <span class="step-icon">🥣</span>
+      <div class="step-num">1</div>
+      <div class="step-title">Prep your stars</div>
+      <ul>
+        <li>Pressure cook jackfruit + potato with salt & turmeric — <strong>2 whistles</strong>. They should yield but hold their shape.</li>
+        <li>Boil roasted moong separately until <em>soft but not surrendered</em>. You want texture, not porridge.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🔥</span>
+      <div class="step-num">2</div>
+      <div class="step-title">The smoky base</div>
+      <ul>
+        <li>Heat mustard oil until it just begins to smoke — this tames its raw pungency.</li>
+        <li>Drop heat, then add bay leaf, dried chili, and panchphoron.</li>
+        <li>Watch carefully: the fenugreek in panchphoron burns fast and turns bitter.</li>
+        <li>Add sliced garlic; fry until just golden at the edges — fragrant and nutty, not dark.</li>
+        <li>Add ginger paste; sauté 30–40 sec.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🌶️</span>
+      <div class="step-num">3</div>
+      <div class="step-title">Bloom the spices</div>
+      <ul>
+        <li>Add cumin + coriander powder with a tiny splash of water.</li>
+        <li>Cook, stirring, until the oil visibly separates at the edges. That's your cue.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🫕</span>
+      <div class="step-num">4</div>
+      <div class="step-title">Bring it together</div>
+      <ul>
+        <li>Add cooked jackfruit; sauté 3–4 min so it picks up the spiced oil.</li>
+        <li>Add the boiled dal and water — aim for a consistency that coats a spoon but still pours freely.</li>
+        <li>Simmer on low, 5–7 minutes.</li>
+      </ul>
+      <div class="warning-note">Dal thickens as it rests — add a splash more water than you think you need.</div>
+    </div>
+
+    <div class="step full">
+      <span class="step-icon">✨</span>
+      <div class="step-num">5</div>
+      <div class="step-title">The finish — don't skip this</div>
+      <ul>
+        <li>Stir in a pinch of sugar. It's traditional, not sweet — it balances the sharpness of mustard oil.</li>
+        <li>Pour in 1 tsp ghee. The oil-ghee layering is what gives the dish its depth.</li>
+        <li>Cover and rest <strong>10 full minutes</strong> before serving. The flavors knit together in this time.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="tips-row">
+    <div class="tip"><strong>On canned jackfruit</strong> Fresh young jackfruit needs 2 whistles. Canned (often pre-softened) may only need 1 — or skip the pressure cook entirely and add straight to the pan.</div>
+    <div class="tip"><strong>On the sugar</strong> Bengali savory cooking often uses a pinch of sugar. Don't omit it — it rounds out the mustard oil's bite in a way nothing else quite does.</div>
+    <div class="tip"><strong>On water</strong> This dal thickens considerably as it sits. What looks perfect in the pot will be noticeably thicker by the time it reaches the table. Always cook a little looser than your target.</div>
+  </div>
+
+  <div class="upgrade">
+    <h2>The Full Kolkata Treatment</h2>
+    <p class="sub">Optional upgrades that nudge this into richer, more celebratory territory</p>
+    <ul>
+      <li>Stir in ½ tsp garam masala at the very end — it adds warmth and lift without overwhelming.</li>
+      <li>Crush 2 garlic cloves, fry them in ghee until golden and fragrant, and pour the whole thing over the finished dal. It will sizzle. Let it.</li>
+      <li>Note: adding garlic shifts this from a niramish (no onion/garlic) preparation to a different dish entirely. Both are delicious — just know which one you're making.</li>
+    </ul>
+  </div>
+
+  <div class="serve">
+    <h3>Serve alongside</h3>
+    <div class="serve-options">
+      <span class="serve-pill">🍚 Steamed rice</span>
+      <span class="serve-pill">🫓 Luchi (fried flatbread)</span>
+      <span class="serve-pill">🥒 A simple cucumber salad</span>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+</div>
+</body>
+</html>
