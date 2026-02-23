@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Recipe Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mustard: #c8860a;
+    --turmeric: #e8a820;
+    --deep: #1a1208;
+    --bark: #3d2b1f;
+    --cream: #fdf6e8;
+    --fog: #f3e9d0;
+    --smoke: #e8dcc4;
+    --green: #2d5016;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--bark);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 60%, rgba(200,134,10,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 20%, rgba(45,80,22,0.2) 0%, transparent 50%);
+  }
+
+  .header-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--turmeric);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    position: relative;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    position: relative;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .site-title em {
+    color: var(--turmeric);
+    font-style: italic;
+  }
+
+  .site-desc {
+    color: var(--smoke);
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 18px;
+    position: relative;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  /* ── DECORATIVE BAND ── */
+  .band {
+    background: var(--turmeric);
+    height: 6px;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 28px 100px;
+  }
+
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--mustard);
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: fadeUp 0.5s 0.3s ease both;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--smoke), transparent);
+  }
+
+  /* ── RECIPE GRID ── */
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    animation: fadeUp 0.5s 0.35s ease both;
+  }
+
+  .recipe-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--smoke);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(61,43,31,0.12);
+  }
+
+  .card-banner {
+    padding: 36px 28px 28px;
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .card-banner .card-emoji {
+    font-size: 4rem;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    opacity: 0.25;
+    line-height: 1;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cream);
+  }
+
+  .card-body {
+    padding: 18px 24px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-desc {
+    font-style: italic;
+    font-size: 0.97rem;
+    color: #666;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 14px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--mustard);
+  }
+
+  .card-cta {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--mustard);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .recipe-card:hover .card-cta { gap: 12px; }
+
+  /* ── ADD MORE CARD ── */
+  .card-add {
+    border: 2px dashed var(--smoke);
+    background: transparent;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 28px;
+    gap: 12px;
+    color: #aaa;
+    font-style: italic;
+    min-height: 240px;
+  }
+
+  .card-add .plus {
+    font-size: 2.5rem;
+    color: var(--smoke);
+    font-style: normal;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  .card-add p {
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 180px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: #bbb;
+    font-size: 0.9rem;
+    font-style: italic;
+    border-top: 1px solid var(--fog);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <p class="header-eyebrow">A personal collection</p>
+  <h1 class="site-title">My <em>Recipe</em><br>Book</h1>
+  <p class="site-desc">Dishes worth making twice.</p>
+</header>
+
+<div class="band"></div>
+
+<main class="main">
+
+  <div class="section-label">All recipes</div>
+
+  <div class="recipe-grid">
+
+    <!-- RECIPE CARD: Moong Dal -->
+    <a href="recipes/moong-jackfruit-dal.html" class="recipe-card">
+      <div class="card-banner" style="background: linear-gradient(135deg, #3d2b1f 0%, #1a1208 100%);">
+        <span class="card-emoji">🫕</span>
+        <span class="card-tag" style="background: rgba(232,168,32,0.2); color: #e8a820;">Bengali</span>
+        <h2 class="card-title">Moong Dal with<br>Raw Jackfruit</h2>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">The dal that eats like a slow-cooked meat dish — without a single bite of it. Roasted moong, young jackfruit, mustard oil, and ghee.</p>
+        <div class="card-meta">
+          <span>🍛 Serves 4</span>
+          <span>⏱ ~45 min</span>
+          <span>🌱 Veggie</span>
+        </div>
+        <span class="card-cta">View recipe →</span>
+      </div>
+    </a>
+
+    <!-- RECIPE CARD: Chicken Korma -->
+    <a href="recipes/chicken-korma.html" class="recipe-card">
+      <div class="card-banner" style="background: linear-gradient(135deg, #2e1a0e 0%, #12100a 100%);">
+        <span class="card-emoji">🍗</span>
+        <span class="card-tag" style="background: rgba(232,168,32,0.2); color: #e8a820;">Mughlai</span>
+        <h2 class="card-title">Chicken<br>Korma</h2>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Marinated chicken, cashew cream, yogurt richness, and the gentle perfume of whole spices. A korma that actually takes its time.</p>
+        <div class="card-meta">
+          <span>🍗 Serves 3–4</span>
+          <span>⏱ ~1 hr</span>
+          <span>🥜 Cashew</span>
+        </div>
+        <span class="card-cta">View recipe →</span>
+      </div>
+    </a>
+
+    <!-- PLACEHOLDER: add more -->
+    <div class="card-add">
+      <span class="plus">+</span>
+      <p>More recipes coming soon — add a new HTML file to the <code>recipes/</code> folder and link it here.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  My Recipe Book &mdash; built with plain HTML, hosted on GitHub Pages.
+</footer>
+
+</body>
+</html>
