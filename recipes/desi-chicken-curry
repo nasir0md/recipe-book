@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Chicken Curry — My Recipe Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chili: #c0230a;
+    --ember: #e85d20;
+    --ochre: #d4820a;
+    --deep: #100808;
+    --char: #1e0e08;
+    --parchment: #fdf5ee;
+    --fog: #f5e8dc;
+    --smoke: #ecddd0;
+    --olive: #3a3010;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--parchment);
+    color: var(--deep);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    background: var(--deep);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-nav a {
+    color: var(--smoke);
+    text-decoration: none;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+  }
+  .site-nav a:hover { color: var(--ember); }
+  .site-nav .site-title {
+    color: var(--ember);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--char);
+    padding: 70px 40px 55px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(192,35,10,0.3) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 30%, rgba(212,130,10,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(232,93,32,0.15) 0%, transparent 40%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--ember);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 900;
+    color: var(--parchment);
+    line-height: 1.05;
+    position: relative;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em { color: var(--ember); font-style: italic; }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--smoke);
+    margin-top: 18px;
+    max-width: 560px;
+    margin-left: auto; margin-right: auto;
+    position: relative;
+    font-style: italic;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    position: relative;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(232,93,32,0.4);
+    color: var(--smoke);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+  }
+
+  /* ── SPICE STRIP ── */
+  .spice-strip {
+    background: var(--chili);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    font-weight: 700;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 52px 0 28px;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--char);
+    white-space: nowrap;
+  }
+
+  .section-header .deco-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--chili), transparent);
+  }
+
+  .section-num {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--ember);
+  }
+
+  /* ── INGREDIENTS ── */
+  .ing-group { margin-bottom: 28px; }
+
+  .ing-group-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--chili);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--smoke);
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 32px;
+  }
+
+  @media (max-width: 560px) {
+    .ingredients-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr !important; }
+    .step.full ul { grid-template-columns: 1fr !important; }
+  }
+
+  .ingredient {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--smoke);
+    transition: background 0.2s, padding-left 0.2s;
+    cursor: default;
+  }
+
+  .ingredient:hover {
+    background: rgba(192,35,10,0.05);
+    border-radius: 4px;
+    padding-left: 6px;
+  }
+
+  .ing-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--chili);
+    font-weight: 700;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .ing-name { color: var(--char); }
+
+  .ing-note {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+    margin-left: 4px;
+  }
+
+  /* ── FROZEN NOTE ── */
+  .frozen-box {
+    background: var(--char);
+    color: var(--parchment);
+    border-radius: 12px;
+    padding: 24px 32px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .frozen-box::after {
+    content: '❄';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    opacity: 0.1;
+    line-height: 1;
+  }
+
+  .frozen-box h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--ember);
+    margin-bottom: 10px;
+  }
+
+  .frozen-box p {
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ── FLAVOR BANNER ── */
+  .flavor-banner {
+    background: var(--char);
+    color: var(--parchment);
+    border-radius: 12px;
+    padding: 28px 36px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flavor-banner::after {
+    content: '🔥';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4.5rem;
+    opacity: 0.12;
+    line-height: 1;
+  }
+
+  .flavor-banner h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--ember);
+    margin-bottom: 12px;
+  }
+
+  .flavor-banner p {
+    font-style: italic;
+    line-height: 1.75;
+    max-width: 580px;
+    font-size: 1.05rem;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .step {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 24px 20px;
+    border: 1px solid var(--smoke);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(30,14,8,0.1);
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--smoke);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .step-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--chili);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .step-icon {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .step ul { list-style: none; padding: 0; }
+
+  .step ul li {
+    padding: 5px 0 5px 18px;
+    position: relative;
+    font-size: 0.97rem;
+    color: var(--char);
+    line-height: 1.5;
+  }
+
+  .step ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--ember);
+    font-size: 0.85rem;
+  }
+
+  .step.full { grid-column: 1 / -1; }
+
+  .step.full ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+
+  .tip-note {
+    background: rgba(212,130,10,0.08);
+    border: 1px solid rgba(212,130,10,0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--char);
+    margin-top: 14px;
+    font-style: italic;
+  }
+  .tip-note::before { content: '💡 '; }
+
+  .warning-note {
+    background: rgba(192,35,10,0.07);
+    border: 1px solid rgba(192,35,10,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--chili);
+    margin-top: 14px;
+    font-style: italic;
+  }
+  .warning-note::before { content: '⚠ '; }
+
+  /* ── TIPS ROW ── */
+  .tips-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tip {
+    background: var(--fog);
+    border-left: 4px solid var(--ember);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.95rem;
+    color: var(--char);
+    font-style: italic;
+  }
+
+  .tip strong {
+    font-style: normal;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--chili);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ── SERVE ── */
+  .serve { margin-top: 52px; text-align: center; }
+
+  .serve h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--chili);
+    margin-bottom: 16px;
+  }
+
+  .serve-options { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  .serve-pill {
+    background: var(--char);
+    color: var(--parchment);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+  }
+
+  .divider {
+    text-align: center;
+    color: var(--ember);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 36px 0 0;
+    opacity: 0.4;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page > * { animation: fadeUp 0.5s ease both; }
+  .page > *:nth-child(1) { animation-delay: 0.3s; }
+  .page > *:nth-child(2) { animation-delay: 0.4s; }
+  .page > *:nth-child(3) { animation-delay: 0.5s; }
+  .page > *:nth-child(4) { animation-delay: 0.55s; }
+  .page > *:nth-child(5) { animation-delay: 0.6s; }
+  .page > *:nth-child(6) { animation-delay: 0.65s; }
+  .page > *:nth-child(7) { animation-delay: 0.7s; }
+  .page > *:nth-child(8) { animation-delay: 0.75s; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html">← All Recipes</a>
+  <span class="site-title">My Recipe Book</span>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Low, slow & unapologetically bold</p>
+  <h1>Desi <em>Chicken</em><br>Curry</h1>
+  <p class="hero-sub">Big bone-in pieces, rendered fat, tomato heat, green chili bite — the kind of curry that fills the whole kitchen with smell before it's halfway done.</p>
+  <div class="hero-tags">
+    <span class="tag">🍗 Serves 4–5</span>
+    <span class="tag">🔥 Spicy</span>
+    <span class="tag">⏱ ~1.5 hrs</span>
+    <span class="tag">🦴 Bone-in</span>
+  </div>
+</header>
+
+<div class="spice-strip">
+  <span>🌶 Green chili</span>
+  <span>🍅 Tomato</span>
+  <span>🫚 Whole spices</span>
+  <span>🧅 Onion</span>
+  <span>🧄 Ginger-garlic</span>
+  <span>✨ Garam masala</span>
+</div>
+
+<div class="page">
+
+  <div class="frozen-box">
+    <h3>A note on big, frozen pieces</h3>
+    <p>Thick bone-in pieces with skin and fat are actually ideal for a curry like this — the fat renders slowly into the gravy giving it body and depth, and the bones release gelatin that thickens everything naturally. The one thing to do right: <strong>thaw completely before cooking</strong>, then pat dry. Surface moisture is the enemy of a good sear and will steam the chicken instead of browning it.</p>
+  </div>
+
+  <!-- INGREDIENTS -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>What You'll Need</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🐔 The chicken</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">~2.5 lbs</span><span class="ing-name">bone-in chicken pieces <span class="ing-note">skin-on, fully thawed, patted dry</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">salt</span></div>
+      <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">turmeric</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">red chili powder</span></div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🫕 The base</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">3 tbsp</span><span class="ing-name">mustard oil <span class="ing-note">or any neutral oil</span></span></div>
+      <div class="ingredient"><span class="ing-amount">2–3</span><span class="ing-name">bay leaves</span></div>
+      <div class="ingredient"><span class="ing-amount">4</span><span class="ing-name">green cardamom pods <span class="ing-note">lightly crushed</span></span></div>
+      <div class="ingredient"><span class="ing-amount">4</span><span class="ing-name">cloves</span></div>
+      <div class="ingredient"><span class="ing-amount">1 stick</span><span class="ing-name">cinnamon</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">cumin seeds</span></div>
+      <div class="ingredient"><span class="ing-amount">2 medium</span><span class="ing-name">onions <span class="ing-note">finely sliced</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1½ tbsp</span><span class="ing-name">ginger-garlic paste</span></div>
+      <div class="ingredient"><span class="ing-amount">2 medium</span><span class="ing-name">tomatoes <span class="ing-note">roughly chopped</span></span></div>
+      <div class="ingredient"><span class="ing-amount">3–5</span><span class="ing-name">green chilies <span class="ing-note">slit lengthwise</span></span></div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🌶 Ground spices</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">turmeric</span></div>
+      <div class="ingredient"><span class="ing-amount">1½ tsp</span><span class="ing-name">red chili powder <span class="ing-note">adjust to heat preference</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1½ tsp</span><span class="ing-name">coriander powder</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">cumin powder</span></div>
+      <div class="ingredient"><span class="ing-amount">to taste</span><span class="ing-name">salt</span></div>
+      <div class="ingredient"><span class="ing-amount">1–1.5 cups</span><span class="ing-name">water</span></div>
+      <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">garam masala <span class="ing-note">to finish</span></span></div>
+    </div>
+  </div>
+
+  <div class="flavor-banner">
+    <h3>Why this works with fatty pieces</h3>
+    <p>Most recipes ask you to trim the fat. Don't. As the chicken slow-cooks, the fat under the skin liquefies and bleeds into the masala, enriching it in a way that lean breast meat simply can't. The tomato provides enough acidity to cut through the richness, and the green chilies — added early — mellow into the gravy rather than sit on top of it. This is a curry that improves dramatically if you let it rest 15–20 minutes before serving.</p>
+  </div>
+
+  <!-- METHOD -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>How to Make It</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <span class="step-icon">🧊</span>
+      <div class="step-num">1</div>
+      <div class="step-title">Thaw & prep</div>
+      <ul>
+        <li>Thaw chicken completely — ideally overnight in the fridge, or in cold water for a few hours.</li>
+        <li>Pat every piece completely dry with kitchen paper. This is not optional.</li>
+        <li>Rub with salt, turmeric, and red chili powder. Set aside while you prep everything else.</li>
+      </ul>
+      <div class="warning-note">Wet chicken won't brown — it steams. Dry it thoroughly, even if it takes a few paper towels.</div>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🔥</span>
+      <div class="step-num">2</div>
+      <div class="step-title">Render & sear</div>
+      <ul>
+        <li>Heat oil in a heavy-bottomed pot or kadai on medium-high. If using mustard oil, smoke it first then reduce.</li>
+        <li>Add chicken skin-side down. Don't touch it for 3–4 minutes — let it sear properly.</li>
+        <li>Flip; sear the other side 2–3 min. The skin should be golden, not grey.</li>
+        <li>Remove and set aside. The rendered fat stays in the pot — that's flavour.</li>
+      </ul>
+      <div class="tip-note">Work in batches if needed. Crowding the pan drops the temperature and you'll get steaming, not searing.</div>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🧅</span>
+      <div class="step-num">3</div>
+      <div class="step-title">Build the masala</div>
+      <ul>
+        <li>In the same pot, reduce to medium. Add whole spices — bay leaves, cardamom, cloves, cinnamon, cumin seeds. Let them sizzle 30 seconds.</li>
+        <li>Add sliced onions. Fry slowly until deep golden brown — 15–20 minutes. Don't rush this; it's the backbone of the gravy.</li>
+        <li>Add ginger-garlic paste; fry until the raw smell is gone, 2 min.</li>
+        <li>Add slit green chilies now — early addition mellows their heat into the base.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🍅</span>
+      <div class="step-num">4</div>
+      <div class="step-title">Tomato & spices</div>
+      <ul>
+        <li>Add chopped tomatoes. Cook on medium, stirring occasionally, until completely broken down and the oil separates — about 10 minutes.</li>
+        <li>Add all ground spices: turmeric, chili powder, coriander, cumin, salt.</li>
+        <li>Stir and cook 2–3 minutes until the masala is deep in colour and fragrant.</li>
+      </ul>
+      <div class="tip-note">The masala is ready when you see oil pooling at the edges and the mix looks almost paste-like. Don't add the chicken before this point.</div>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🍗</span>
+      <div class="step-num">5</div>
+      <div class="step-title">Return the chicken</div>
+      <ul>
+        <li>Add the seared chicken back into the pot. Turn to coat every piece in the masala.</li>
+        <li>Cook on medium heat without water for 5–7 minutes — let the chicken absorb the masala.</li>
+        <li>Add 1–1.5 cups warm water. Stir, scraping up anything stuck on the bottom.</li>
+      </ul>
+    </div>
+
+    <div class="step full">
+      <span class="step-icon">⏳</span>
+      <div class="step-num">6</div>
+      <div class="step-title">Low & slow to the finish</div>
+      <ul>
+        <li>Bring to a gentle boil, then reduce to low. Cover and cook 30–40 minutes for big bone-in pieces — thick thighs and drumsticks need time.</li>
+        <li>Check every 10–15 min; stir gently, add a splash of water if it's catching.</li>
+        <li>The chicken is done when the meat pulls back from the bone and the gravy is thick and glossy.</li>
+        <li>Sprinkle garam masala, cover, and rest off the heat for 15–20 minutes before serving. The flavour deepens noticeably in this rest.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="tips-row">
+    <div class="tip"><strong>On the fat & skin</strong> Leave it on during cooking — it bastes the meat from inside and enriches the gravy. If you find it too rich after cooking, you can skim excess oil from the surface before serving.</div>
+    <div class="tip"><strong>On the onions</strong> The 15–20 minute onion fry feels long but it's non-negotiable for this style of curry. Under-fried onions give a raw, sharp flavour; deeply golden onions dissolve into a sweet, complex base.</div>
+    <div class="tip"><strong>On the rest</strong> This curry is noticeably better after 15–20 minutes off the heat. Even better the next day — the spices settle, the fat redistributes, and the whole thing deepens.</div>
+  </div>
+
+  <div class="serve">
+    <h3>Serve alongside</h3>
+    <div class="serve-options">
+      <span class="serve-pill">🍚 Steamed rice</span>
+      <span class="serve-pill">🫓 Roti or paratha</span>
+      <span class="serve-pill">🧅 Raw sliced onion & lemon</span>
+      <span class="serve-pill">🫙 Pickle</span>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+</div>
+</body>
+</html>
