@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicken Korma — My Recipe Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8860b;
+    --saffron: #e8a820;
+    --ivory: #b8a060;
+    --deep: #12100a;
+    --mahogany: #2e1a0e;
+    --parchment: #fdf8ee;
+    --fog: #f5edda;
+    --smoke: #e8dfc8;
+    --rust: #8b3a1a;
+    --green: #1e3a10;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--parchment);
+    color: var(--deep);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    background: var(--deep);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-nav a {
+    color: var(--smoke);
+    text-decoration: none;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+  }
+  .site-nav a:hover { color: var(--saffron); }
+  .site-nav .site-title {
+    color: var(--saffron);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--mahogany);
+    padding: 70px 40px 55px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 25% 40%, rgba(184,134,11,0.3) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 70%, rgba(139,58,26,0.25) 0%, transparent 50%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--saffron);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 900;
+    color: var(--parchment);
+    line-height: 1.05;
+    position: relative;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em { color: var(--saffron); font-style: italic; }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--smoke);
+    margin-top: 18px;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-style: italic;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    position: relative;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(232,168,32,0.4);
+    color: var(--smoke);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+  }
+
+  /* ── SPICE STRIP ── */
+  .spice-strip {
+    background: var(--saffron);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--mahogany);
+    font-weight: 700;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 52px 0 28px;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--mahogany);
+    white-space: nowrap;
+  }
+
+  .section-header .deco-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .section-num {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--saffron);
+  }
+
+  /* ── INGREDIENTS ── */
+  .ing-group { margin-bottom: 32px; }
+
+  .ing-group-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--smoke);
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 32px;
+  }
+
+  @media (max-width: 560px) {
+    .ingredients-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr !important; }
+    .step.full ul { grid-template-columns: 1fr !important; }
+  }
+
+  .ingredient {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--smoke);
+    transition: background 0.2s, padding-left 0.2s;
+    cursor: default;
+  }
+
+  .ingredient:hover {
+    background: rgba(184,134,11,0.06);
+    border-radius: 4px;
+    padding-left: 6px;
+  }
+
+  .ing-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .ing-name { color: var(--mahogany); }
+
+  .ing-note {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+    margin-left: 4px;
+  }
+
+  /* ── FLAVOR BANNER ── */
+  .flavor-banner {
+    background: var(--mahogany);
+    color: var(--parchment);
+    border-radius: 12px;
+    padding: 28px 36px;
+    margin: 44px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flavor-banner::after {
+    content: '✦';
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    color: rgba(232,168,32,0.12);
+    line-height: 1;
+  }
+
+  .flavor-banner h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--saffron);
+    margin-bottom: 12px;
+  }
+
+  .flavor-banner p {
+    font-style: italic;
+    line-height: 1.75;
+    max-width: 580px;
+    font-size: 1.05rem;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .step {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 24px 20px;
+    border: 1px solid var(--smoke);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(46,26,14,0.1);
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--smoke);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .step-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .step-icon {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .step ul { list-style: none; padding: 0; }
+
+  .step ul li {
+    padding: 5px 0 5px 18px;
+    position: relative;
+    font-size: 0.97rem;
+    color: var(--mahogany);
+    line-height: 1.5;
+  }
+
+  .step ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--saffron);
+    font-size: 0.85rem;
+  }
+
+  .step.full { grid-column: 1 / -1; }
+
+  .step.full ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+
+  /* ── ALERT NOTES ── */
+  .tip-note {
+    background: rgba(184,134,11,0.08);
+    border: 1px solid rgba(184,134,11,0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--mahogany);
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  .tip-note::before { content: '💡 '; }
+
+  .warning-note {
+    background: rgba(139,58,26,0.07);
+    border: 1px solid rgba(139,58,26,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--rust);
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  .warning-note::before { content: '⚠ '; }
+
+  /* ── TIPS ROW ── */
+  .tips-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tip {
+    background: var(--fog);
+    border-left: 4px solid var(--saffron);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.95rem;
+    color: var(--mahogany);
+    font-style: italic;
+  }
+
+  .tip strong {
+    font-style: normal;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ── OIL CHOICE CALLOUT ── */
+  .choice-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 0 0 8px;
+  }
+
+  .choice {
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .choice strong {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .choice.veg { background: rgba(30,58,16,0.08); border: 1px solid rgba(30,58,16,0.2); }
+  .choice.veg strong { color: var(--green); }
+  .choice.mustard { background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.25); }
+  .choice.mustard strong { color: var(--gold); }
+
+  /* ── SERVE WITH ── */
+  .serve { margin-top: 52px; text-align: center; }
+
+  .serve h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .serve-options { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  .serve-pill {
+    background: var(--mahogany);
+    color: var(--parchment);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--saffron);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 36px 0 0;
+    opacity: 0.45;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page > * { animation: fadeUp 0.5s ease both; }
+  .page > *:nth-child(1) { animation-delay: 0.3s; }
+  .page > *:nth-child(2) { animation-delay: 0.4s; }
+  .page > *:nth-child(3) { animation-delay: 0.5s; }
+  .page > *:nth-child(4) { animation-delay: 0.55s; }
+  .page > *:nth-child(5) { animation-delay: 0.6s; }
+  .page > *:nth-child(6) { animation-delay: 0.65s; }
+  .page > *:nth-child(7) { animation-delay: 0.7s; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html">← All Recipes</a>
+  <span class="site-title">My Recipe Book</span>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Rich, slow & deeply fragrant</p>
+  <h1><em>Chicken</em><br>Korma</h1>
+  <p class="hero-sub">Marinated chicken, cashew-cream richness, and the gentle heat of whole spices — a korma that actually takes its time.</p>
+  <div class="hero-tags">
+    <span class="tag">🍗 Serves 3–4</span>
+    <span class="tag">⏱ ~1 hr</span>
+    <span class="tag">🥛 Yogurt-based</span>
+    <span class="tag">🥜 Cashew paste</span>
+  </div>
+</header>
+
+<div class="spice-strip">
+  <span>🫚 Cardamom</span>
+  <span>🌿 Clove</span>
+  <span>🪵 Cinnamon</span>
+  <span>🥜 Cashew cream</span>
+  <span>🥛 Yogurt</span>
+  <span>✨ Garam masala</span>
+</div>
+
+<div class="page">
+
+  <!-- INGREDIENTS -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>What You'll Need</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🐔 The chicken & marinade</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">2 lbs</span><span class="ing-name">chicken <span class="ing-note">bone-in pieces work best</span></span></div>
+      <div class="ingredient"><span class="ing-amount">3–4 tbsp</span><span class="ing-name">yogurt</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">salt</span></div>
+      <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">turmeric</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">red chili powder</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">ginger-garlic paste <span class="ing-note">just a little here</span></span></div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🥜 The cashew cream</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">20–30</span><span class="ing-name">raw cashews <span class="ing-note">soaked 20–30 min</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1 tbsp</span><span class="ing-name">yogurt <span class="ing-note">to help blending</span></span></div>
+      <div class="ingredient"><span class="ing-amount">optional</span><span class="ing-name">poppy seed paste</span></div>
+    </div>
+  </div>
+
+  <div class="ing-group">
+    <div class="ing-group-title">🫕 The base & spices</div>
+    <div class="ingredients-grid">
+      <div class="ingredient"><span class="ing-amount">2–3 tbsp</span><span class="ing-name">oil <span class="ing-note">veg or mustard — see below</span></span></div>
+      <div class="ingredient"><span class="ing-amount">3–4</span><span class="ing-name">green cardamom pods</span></div>
+      <div class="ingredient"><span class="ing-amount">3–4</span><span class="ing-name">cloves</span></div>
+      <div class="ingredient"><span class="ing-amount">1 stick</span><span class="ing-name">cinnamon</span></div>
+      <div class="ingredient"><span class="ing-amount">½–1</span><span class="ing-name">onion <span class="ing-note">thinly sliced</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1½ tsp</span><span class="ing-name">ginger-garlic paste</span></div>
+      <div class="ingredient"><span class="ing-amount">½ tsp</span><span class="ing-name">turmeric</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">cumin powder</span></div>
+      <div class="ingredient"><span class="ing-amount">1 tsp</span><span class="ing-name">coriander powder</span></div>
+      <div class="ingredient"><span class="ing-amount">2–6 tbsp</span><span class="ing-name">yogurt <span class="ing-note">optional, for more sourness</span></span></div>
+      <div class="ingredient"><span class="ing-amount">1 cup</span><span class="ing-name">water</span></div>
+      <div class="ingredient"><span class="ing-amount">pinch</span><span class="ing-name">garam masala <span class="ing-note">to finish</span></span></div>
+    </div>
+  </div>
+
+  <!-- OIL CHOICE -->
+  <div class="choice-box">
+    <div class="choice veg">
+      <strong>🫙 Vegetable oil</strong>
+      Gives a cleaner, more neutral base — lets the korma's sour-sweet richness come through more clearly. Classic for a lighter, more delicate finish.
+    </div>
+    <div class="choice mustard">
+      <strong>🟡 Mustard oil</strong>
+      Adds a pungent sharpness underneath the creaminess. Smoke it to the point first to tame it. Changes the dish's character — still delicious, just bolder.
+    </div>
+  </div>
+
+  <!-- FLAVOR BANNER -->
+  <div class="flavor-banner">
+    <h3>What makes this korma different</h3>
+    <p>The cashew paste — not cream, not coconut milk — is what gives this its body. Soaked and blended with yogurt, it thickens the gravy into something genuinely silky without tipping into heavy. The yogurt stirred off the heat prevents curdling and keeps the sauce bright. Patience with the chicken in step one (no water, medium heat) is where the flavor locks in.</p>
+  </div>
+
+  <!-- METHOD -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>How to Make It</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <span class="step-icon">🐔</span>
+      <div class="step-num">1</div>
+      <div class="step-title">Marinate</div>
+      <ul>
+        <li>Combine chicken with yogurt, salt, turmeric, red chili powder, and a little ginger-garlic paste.</li>
+        <li>Mix well, cover, and rest for <strong>20–30 minutes minimum</strong>. Longer is better — overnight in the fridge is excellent.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🥜</span>
+      <div class="step-num">2</div>
+      <div class="step-title">Make the cashew cream</div>
+      <ul>
+        <li>Soak cashews in water for 20–30 minutes, then drain completely.</li>
+        <li>Blend with 1 tbsp yogurt until completely smooth — no graininess.</li>
+        <li>Add poppy seed paste too if using; blend together.</li>
+      </ul>
+      <div class="tip-note">If your blender struggles, add just a splash more yogurt — but keep it thick, not runny.</div>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🔥</span>
+      <div class="step-num">3</div>
+      <div class="step-title">Build the base</div>
+      <ul>
+        <li>Heat oil. If using mustard oil, bring to smoking point first, then reduce heat.</li>
+        <li>Temper with cardamom, cloves, and cinnamon — let them sizzle and perfume the oil for 30 seconds.</li>
+        <li>Add sliced onion; fry until lightly golden. Don't rush this — 8–12 min on medium.</li>
+        <li>Add ginger-garlic paste; fry until the raw smell disappears, 1–2 min.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🌶️</span>
+      <div class="step-num">4</div>
+      <div class="step-title">Spices & chicken</div>
+      <ul>
+        <li>Add turmeric, cumin, coriander, and salt. Mix well to coat the onion.</li>
+        <li>Add the marinated chicken. Stir to combine everything.</li>
+        <li>Cook on <strong>medium heat for a few minutes without adding water</strong> — let the chicken seal and the marinade reduce into the oil.</li>
+      </ul>
+      <div class="tip-note">This dry-cook stage is where the flavor concentrates. Resist adding water early.</div>
+    </div>
+
+    <div class="step">
+      <span class="step-icon">🥛</span>
+      <div class="step-num">5</div>
+      <div class="step-title">Add the cashew cream</div>
+      <ul>
+        <li>Pour in the cashew paste; mix well to coat the chicken.</li>
+        <li>Cook for <strong>5 minutes</strong> on medium, stirring occasionally.</li>
+        <li>If adding extra yogurt: <em>take the pan off the heat first</em>, stir yogurt in thoroughly, then return to low-medium. This prevents splitting.</li>
+        <li>Cook a further few minutes once yogurt is incorporated.</li>
+      </ul>
+      <div class="warning-note">Never add yogurt on high heat — always off the flame first, then back on low.</div>
+    </div>
+
+    <div class="step full">
+      <span class="step-icon">✨</span>
+      <div class="step-num">6</div>
+      <div class="step-title">Finish it</div>
+      <ul>
+        <li>Add 1 cup water — sooner if the pan is getting dry. Turn heat to medium.</li>
+        <li>Cover with a lid and cook until the chicken is completely done, stirring once or twice.</li>
+        <li>A few minutes before turning off the heat, sprinkle garam masala over the top. Don't stir it in immediately — let it bloom on the surface for a minute first.</li>
+        <li>Taste and adjust salt. Rest covered for 5–10 minutes before serving.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-row">
+    <div class="tip"><strong>On the marinade time</strong> 20–30 minutes is the floor. The acid in the yogurt starts tenderizing immediately — 2–3 hours transforms the texture noticeably. If you have time, marinate the night before.</div>
+    <div class="tip"><strong>On the yogurt split</strong> Taking the pan off heat before adding yogurt is non-negotiable. Even a few seconds on high heat will break the emulsion and you'll get grainy white curds instead of a smooth sauce.</div>
+    <div class="tip"><strong>On water timing</strong> Add water earlier rather than later if the pan looks dry — once the cashew paste has scorched onto the bottom, it's hard to recover. A cup of water is a guide; use your judgment.</div>
+  </div>
+
+  <!-- SERVE -->
+  <div class="serve">
+    <h3>Serve alongside</h3>
+    <div class="serve-options">
+      <span class="serve-pill">🍚 Steamed basmati</span>
+      <span class="serve-pill">🫓 Paratha or naan</span>
+      <span class="serve-pill">🥗 Sliced onion & lemon</span>
+      <span class="serve-pill">🫙 Pickle on the side</span>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+</div>
+</body>
+</html>
